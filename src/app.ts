@@ -1,5 +1,6 @@
 import fastify from 'fastify'
 import fastifyCookie from '@fastify/cookie'
+import fastifyCors from '@fastify/cors'
 
 import { ZodError } from 'zod'
 import { env } from './env'
@@ -22,6 +23,19 @@ app.register(fastifyJwt, {
 })
 
 app.register(fastifyCookie)
+
+/**
+ * NAs chamadas do front via axios utilize 
+ *  const api = axios.create({
+    baseURL: 'http://localhost:3333',
+    withCredentials: true,
+    })
+ */
+
+app.register(fastifyCors, {
+  origin: true,
+  credentials: true,
+})
 
 app.register(usersRoutes)
 app.register(gymsRoutes)
